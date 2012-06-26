@@ -1,0 +1,9 @@
+Include the following in the .profile (or equivalent):
+
+for dir in $HOME/tex/latex/*
+do
+  TEXINPUTS=$TEXINPUTS:$dir
+done
+
+export TEXINPUTS=.:$TEXINPUTS
+
