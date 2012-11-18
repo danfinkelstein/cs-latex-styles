@@ -25,70 +25,45 @@ in Computer Science\\[6pt]
 \end{flushright}
 \rule{\textwidth}{1pt}
 \vfill
-\begin{flushleft}
-\large\itshape
-\begin{tabular}{@{}l}
-{\Large\upshape\bfseries Springer}\\[8pt]
-Berlin\enspace Heidelberg\enspace New\kern0.1em York\\[5pt]
-Barcelona\enspace Budapest\enspace Hong\kern0.2em Kong\\[5pt]
-London\enspace Milan\enspace Paris\enspace\\[5pt]
-Santa\kern0.2em Clara\enspace Singapore\enspace Tokyo
-\end{tabular}
-\end{flushleft}
+%\begin{flushleft}
+%\large\itshape
+%\begin{tabular}{@{}l}
+%{\Large\upshape\bfseries Springer}\\[8pt]
+%Berlin\enspace Heidelberg\enspace New\kern0.1em York\\[5pt]
+%Barcelona\enspace Budapest\enspace Hong\kern0.2em Kong\\[5pt]
+%London\enspace Milan\enspace Paris\enspace\\[5pt]
+%Santa\kern0.2em Clara\enspace Singapore\enspace Tokyo
+%\end{tabular}
+%\end{flushleft}
 \newpage
 %
 \section*{For further information please contact us:}
 %
 \begin{flushleft}
-\begin{tabular}{l@{\quad}l@{\hspace{3mm}}l@{\quad}l}
-$\bullet$&\multicolumn{3}{@{}l}{\bfseries Springer-\kern-2pt Verlag
-Heidelberg}\\[1mm]
-&\multicolumn{3}{@{}l}{Department New Technologies/Product
-Development}\\
-&\multicolumn{3}{@{}l}{Springer-Verlag, Postfach 105280, D-69042
-Heidelberg
-1, FRG}\\[0.5mm]
- & Telefax:   & (0\,62\,21)487688\\
- &            & (0\,62\,21)487366\\
- & Internet:  & \tt lncs@springer.de    & for editorial questions\\
- &            & \tt texhelp@springer.de & for \TeX{} problems
+\begin{tabular}{l@{\quad}l@{\hspace{3mm}}l@{\qquad}l}
+$\bullet$&\multicolumn{3}{@{}l}{\bfseries LNCS Editorial Office}\\[1mm]
+&\multicolumn{3}{@{}l}{Springer-Verlag}\\
+&\multicolumn{3}{@{}l}{Computer Science Editorial}\\
+&\multicolumn{3}{@{}l}{Tiergartenstraﬂe 17}\\
+&\multicolumn{3}{@{}l}{69121 Heidelberg}\\
+&\multicolumn{3}{@{}l}{Germany}\\[0.5mm]
+ & Tel:       & +49-6221-487-8706\\
+ & Fax:       & +49-6221-487-8588\\
+ & e-mail:    & \tt lncs@springer.com    & for editorial questions\\
+ &            & \tt texhelp@springer.de & for \TeX{} problems\\[2mm]
+\noalign{\rule{\textwidth}{1pt}}
+\noalign{\vskip2mm}
+%
+%{\tt svserv@vax.ntp.springer.de}\hfil first try the \verb|help|
+%command.
+%
+$\bullet$&\multicolumn{3}{@{}l}{\bfseries We are also reachable through the world wide web:}\\[1mm]
+         &\multicolumn{2}{@{}l}{\texttt{http://www.springer.com}}&Springer Global Website\\
+         &\multicolumn{2}{@{}l}{\texttt{http://www.springer.com/lncs}}&LNCS home page\\
+         &\multicolumn{2}{@{}l}{\texttt{http://www.springerlink.com}}&data repository\\
+         &\multicolumn{2}{@{}l}{\texttt{ftp://ftp.springer.de}}&FTP server
 \end{tabular}
 \end{flushleft}
-\rule{\textwidth}{1pt}
-%
-\section*{Acceptable formats of your disk/magnetic tape and output:}
-%
-The following formats are acceptable: 5.25$^{\prime\prime}$ diskette
-MS-DOS, 5.25$^{\prime\prime}$ CP/M, 3.5$^{\prime\prime}$ diskette
-MS-DOS, 3.5$^{\prime\prime}$ diskette Apple MacIntosh, 9-track 1600
-bpi magnetic tape VAX/VMS, 9-track 1600 bpi magnetic tape ANSI with
-label, SUN-Streamer Tape.
-
-Once you have completed your work using this macro package,
-please submit your own printout of the {\em final
-version together with the disk or magnetic tape}, containing your
-\LaTeX{} input (source) file und the final DVI-file and make sure
-that the text is {\em identical in both cases.}
-
-\bigskip
-This macro package, as well as all other macro packages, style
-files, and document classes that Springer distributes, are also
-available through our mailserver (for people with only e-mail access).
-
-{\tt svserv@vax.ntp.springer.de}\hfil first try the \verb|help|
-command.
-
-\noindent We are also reachable through the world wide web:
-\begin{flushleft}
-\tt
-\begin{tabular}{@{}l@{\quad}r@{\tt:}l}
-\rmfamily URLs are &   http&//www.springer.de       \\
-             & gopher&//ftp.springer.de \\
-             &    ftp&//ftp.springer.de
-\end{tabular}
-\end{flushleft}
-
-
 
 
 %
@@ -143,6 +118,8 @@ The package consists of the following files:
 {\tt llncs.doc}  & general instructions (source of this document),\\
         & {\tt llncs.doc} means {\itshape l\/}atex {\itshape doc\/}umentation for\\
         & {\itshape L\/}ecture {\itshape N}otes in {\itshape C\/}omputer {\itshape S\/}cience\\
+{\tt llncsdoc.pdf}& the documentation of the class (PDF version),\\
+{\tt llncs.doc}  & general instructions (source of this document),\\
 {\tt llncsdoc.sty}  & class modifications to help for the instructions\\
 {\tt llncs.ind} & an external (faked) author index file\\
 {\tt subjidx.ind} & subject index demo from the Springer book package\\
@@ -415,7 +392,9 @@ In addition, you can use
 to provide your email address within \verb|\institute|. If you need to
 typeset the tilde character -- e.g. for your web page in your unix
 system's home directory -- the \verb|\homedir| command will happily do
-this.
+this. Please note that, if your email address is given in your paper, 
+it will also be included in the meta data of the online version.
+\enlargethispage*{6mm}
 
 \medskip
 If footnote like things are needed anywhere in the contribution heading

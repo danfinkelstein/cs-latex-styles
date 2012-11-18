@@ -2,8 +2,26 @@
 
 % clrscode.sty
 
-% $Id: clrscode.sty,v 1.2 2003/06/19 14:51:17 thc Exp $
+% $Id: clrscode.sty,v 1.7 2007/03/29 19:12:30 thc Exp $
 % $Log: clrscode.sty,v $
+% Revision 1.7  2007/03/29 19:12:30  thc
+% Added date and version information to the \ProvidesPackage command.
+%
+% Revision 1.6  2005/07/14 20:55:00  thc
+% Added a definition for \numref.  Thanks to Matt Suder(?) and Johan Gade.
+%
+% Revision 1.5  2003/11/11 15:45:37  thc
+% Removed a macro that is no longer needed.
+%
+% Revision 1.4  2003/11/07 20:23:16  thc
+% Fixed a bug that caused incorrect behavior when the \zi command
+% is used for lines beginning with \Until, \Else, \ElseIf, or \ElseNoIf.
+% Thanks for Oliver Ernst for reporting this bug.
+%
+% Revision 1.3  2003/09/26 19:42:54  thc
+% Changed \codeboxwidth from \textwidth to \linewidth so that the package
+% works in twocolumn mode.
+%
 % Revision 1.2  2003/06/19 14:51:17  thc
 % Fixed a bug that caused this package to interact badly with the
 % color package.  Thanks to Janne Rinta-Mänty for reporting this bug
@@ -81,7 +99,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesPackage{clrscode}
+\ProvidesPackage{clrscode}[2007/03/29 v1.7 format pseudocode]
 \usepackage{latexsym}			% needed for \Comment symbol
 
 % Commands for typesetting constants, procedure names, identifiers, and
@@ -155,7 +173,7 @@
 % Assume that the width of the codebox is the width of the text, minus
 % the width of 2 digits.  We'll correct for that later.
 \newlength{\codeboxwidth}
-\setlength{\codeboxwidth}{\textwidth}
+\setlength{\codeboxwidth}{\linewidth} % Thanks, David Etherington!
 \addtolength{\codeboxwidth}{-2\digitwidth}
 
 % The "codebox" environment produces an unbreakable section of code
@@ -227,8 +245,12 @@
 % Make the next line be flush against the right margin.
 \newcommand{\Flushright}{\`}
 
+\newif\ifnumberedline
+\numberedlinetrue
+
 % The \li command starts a new numbered line.
-\newcommand{\li}{\iffirstcodeline\global\firstcodelinefalse\else\\ \fi
+\newcommand{\li}{\global\numberedlinetrue%
+\iffirstcodeline\global\firstcodelinefalse\else\\ \fi
 \stepcounter{codelinenumber}%
 \liprint}
 
@@ -240,7 +262,14 @@
 
 % \liprint actually prints the line number and sets up the indentation.
 \newcommand{\liprint}{\protected@xdef\@lilabel{\thecodelinenumber}%
-\thecodelinenumber\'\Indent%
+\ifnumberedline\thecodelinenumber\fi\'\Indent%
+}
+
+\providecommand{\numref}[1]{%
+  \@ifundefined{r@#1}{000}{%
+    \expandafter\expandafter\expandafter\@firstoftwo
+    \csname r@#1\endcsname
+  }%
 }
 
 % \setlinenumber sets the line number to its argument
@@ -252,12 +281,8 @@
 \addtocounter{codelinenumber}{-1}\addtocounter{codelinenumber}{#2}}
 
 % The \zi command starts a new unnumbered line.
-\newcommand{\zi}{\iffirstcodeline\global\firstcodelinefalse\else\\ \fi
-\ziprint}
-
-% \ziprint sets up the indentation.
-\newcommand{\ziprint}{\protected@xdef\@lilabel{\thecodelinenumber}%
-\'\Indent%
-}
+\newcommand{\zi}{\global\numberedlinefalse%
+\iffirstcodeline\global\firstcodelinefalse\else\\ \fi
+\liprint}
 
 \endinput

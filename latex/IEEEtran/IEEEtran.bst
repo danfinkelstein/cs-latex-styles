@@ -1,9 +1,9 @@
 %%
 %% IEEEtran.bst
 %% BibTeX Bibliography Style file for IEEE Journals and Conferences (unsorted)
-%% Version 1.11 (2003/04/02)
+%% Version 1.12 (2007/01/11)
 %% 
-%% Copyright (c) 2003 Michael Shell
+%% Copyright (c) 2003-2007 Michael Shell
 %% 
 %% Original starting code base and algorithms obtained from the output of
 %% Patrick W. Daly's makebst package as well as from prior versions of
@@ -12,52 +12,82 @@
 %% 1. Howard Trickey and Oren Patashnik's ieeetr.bst  (1985/1988)
 %% 2. Silvano Balemi and Richard H. Roy's IEEEbib.bst (1993)
 %% 
-%% 
-%% See:
-%% http://www.ctan.org/tex-archive/macros/latex/contrib/supported/IEEEtran/
-%% for latest version and current contact information.
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
+%% and/or
+%% http://www.ieee.org/
 %% 
 %% For use with BibTeX version 0.99a or later
 %%
 %% This is a numerical citation style.
 %% 
-%%**********************************************************************
+%%*************************************************************************
 %% Legal Notice:
 %% This code is offered as-is without any warranty either expressed or
 %% implied; without even the implied warranty of MERCHANTABILITY or
-%% FITNESS FOR A PARTICULAR PURPOSE!
+%% FITNESS FOR A PARTICULAR PURPOSE! 
 %% User assumes all risk.
 %% In no event shall IEEE or any contributor to this code be liable for
 %% any damages or losses, including, but not limited to, incidental,
 %% consequential, or any other damages, resulting from the use or misuse
 %% of any information contained here.
 %%
-%% This code is distributed under the Perl Artistic License 
-%% ( http://language.perl.com/misc/Artistic.html ) 
-%% and may be freely used, distributed and modified - subject to the
-%% constraints therein.
-%% Retain all contribution notices, credits and disclaimers.
-%% 
 %% All comments are the opinions of their respective authors and are not
 %% necessarily endorsed by the IEEE.
-%%**********************************************************************
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%
+%% File list of work: IEEEabrv.bib, IEEEfull.bib, IEEEexample.bib,
+%%                    IEEEtran.bst, IEEEtranS.bst, IEEEtranSA.bst,
+%%                    IEEEtranN.bst, IEEEtranSN.bst, IEEEtran_bst_HOWTO.pdf
+%%*************************************************************************
 %
 %
 % Changelog:
-% 
+%
 % 1.00 (2002/08/13) Initial release
-% 
+%
 % 1.10 (2002/09/27)
 %  1. Corrected minor bug for improperly formed warning message when a
 %     book was not given a title. Thanks to Ming Kin Lai for reporting this.
 %  2. Added support for CTLname_format_string and CTLname_latex_cmd fields
 %     in the BST control entry type.
-% 
+%
 % 1.11 (2003/04/02)
 %  1. Fixed bug with URLs containing underscores when using url.sty. Thanks
 %     to Ming Kin Lai for reporting this.
-
-
+%
+% 1.12 (2007/01/11)
+%  1. Fixed bug with unwanted comma before "et al." when an entry contained
+%     more than two author names. Thanks to Pallav Gupta for reporting this.
+%  2. Fixed bug with anomalous closing quote in tech reports that have a
+%     type, but without a number or address. Thanks to Mehrdad Mirreza for
+%     reporting this.
+%  3. Use braces in \providecommand in begin.bib to better support
+%     latex2html. TeX style length assignments OK with recent versions
+%     of latex2html - 1.71 (2002/2/1) or later is strongly recommended.
+%     Use of the language field still causes trouble with latex2html.
+%     Thanks to Federico Beffa for reporting this.
+%  4. Added IEEEtran.bst ID and version comment string to .bbl output.
+%  5. Provide a \BIBdecl hook that allows the user to execute commands
+%     just prior to the first entry.
+%  6. Use default urlstyle (is using url.sty) of "same" rather than rm to
+%     better work with a wider variety of bibliography styles.
+%  7. Changed month abbreviations from Sept., July and June to Sep., Jul.,
+%     and Jun., respectively, as IEEE now does. Thanks to Moritz Borgmann
+%     for reporting this.
+%  8. Control entry types should not be considered when calculating longest
+%     label width.
+%  9. Added alias www for electronic/online.
+% 10. Added CTLname_url_prefix control entry type.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -70,10 +100,11 @@
 % NOTE: The recommended LaTeX command to invoke a control entry type is:
 % 
 %\makeatletter
-%\def\bstctlcite#1{\@bsphack
-%  \@for\@citeb:=#1\do{%
+%\def\bstctlcite{\@ifnextchar[{\@bstctlcite}{\@bstctlcite[@auxout]}}
+%\def\@bstctlcite[#1]#2{\@bsphack
+%  \@for\@citeb:=#2\do{%
 %    \edef\@citeb{\expandafter\@firstofone\@citeb}%
-%    \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi}%
+%    \if@filesw\immediate\write\csname #1\endcsname{\string\citation{\@citeb}}\fi}%
 %  \@esphack}
 %\makeatother
 %
@@ -140,6 +171,10 @@ FUNCTION {default.name.format.string}{ "{f.~}{vv~}{ll}{, jj}" }
 FUNCTION {default.name.latex.cmd}{ "" }
 
 
+% The default URL prefix.
+FUNCTION {default.name.url.prefix}{ "[Online]. Available:" }
+
+
 % Other controls that cannot be accessed via IEEEtranBSTCTL entry type.
 
 % #0 turns off the terminal startup banner/completed message so as to
@@ -154,9 +189,9 @@ FUNCTION {is.print.banners.to.terminal} { #1 }
 %% FILE VERSION AND BANNER %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-FUNCTION{bst.file.version} { "1.11" }
-FUNCTION{bst.file.date} { "2003/04/02" }
-FUNCTION{bst.file.website} { "http://www.ctan.org/tex-archive/macros/latex/contrib/supported/IEEEtran/" }
+FUNCTION{bst.file.version} { "1.12" }
+FUNCTION{bst.file.date} { "2007/01/11" }
+FUNCTION{bst.file.website} { "http://www.michaelshell.org/tex/ieeetran/bibtex/" }
 
 FUNCTION {banner.message}
 { is.print.banners.to.terminal
@@ -212,7 +247,6 @@ FUNCTION {bbl.standard}{ "Std." }
 FUNCTION {bbl.techrep}{ "Tech. Rep." }
 FUNCTION {bbl.mthesis}{ "Master's thesis" }
 FUNCTION {bbl.phdthesis}{ "Ph.D. dissertation" }
-FUNCTION {bbl.urlprefix}{ "[Online]. Available:" }
 FUNCTION {bbl.st}{ "st" }
 FUNCTION {bbl.nd}{ "nd" }
 FUNCTION {bbl.rd}{ "rd" }
@@ -241,10 +275,10 @@ MACRO {feb} {"Feb."}
 MACRO {mar} {"Mar."}
 MACRO {apr} {"Apr."}
 MACRO {may} {"May"}
-MACRO {jun} {"June"}
-MACRO {jul} {"July"}
+MACRO {jun} {"Jun."}
+MACRO {jul} {"Jul."}
 MACRO {aug} {"Aug."}
-MACRO {sep} {"Sept."}
+MACRO {sep} {"Sep."}
 MACRO {oct} {"Oct."}
 MACRO {nov} {"Nov."}
 MACRO {dec} {"Dec."}
@@ -299,6 +333,7 @@ ENTRY
     CTLdash_repeated_names
     CTLname_format_string
     CTLname_latex_cmd
+    CTLname_url_prefix
   }
   {}
   { label }
@@ -343,7 +378,8 @@ STRINGS { bibinfo
           t
           ALTinterwordstretchfactor
           name.format.string
-          name.latex.cmd}
+          name.latex.cmd
+          name.url.prefix}
 
 
 
@@ -363,6 +399,7 @@ FUNCTION {initialize.controls}
   default.ALTinterwordstretchfactor 'ALTinterwordstretchfactor :=
   default.name.format.string 'name.format.string :=
   default.name.latex.cmd 'name.latex.cmd :=
+  default.name.url.prefix 'name.url.prefix :=
 }
 
 
@@ -1024,33 +1061,35 @@ FUNCTION {start.entry}
 % code sequences are those that control the alternate interword spacing and
 % foreign language hyphenation patterns. The heavy use of \providecommand
 % gives users a way to override the defaults. Special thanks to Javier Bezos,
-% Johannes Braams, Robin Fairburns, Heiko Oberdiek, Donald Arseneau and all
+% Johannes Braams, Robin Fairbairns, Heiko Oberdiek, Donald Arseneau and all
 % the other gurus on comp.text.tex for their help and advice on the topic of
 % \selectlanguage, Babel and BibTeX.
 FUNCTION {begin.bib}
-{ preamble$ empty$ 'skip$
+{ "% Generated by IEEEtran.bst, version: " bst.file.version * " (" * bst.file.date * ")" *
+  write$ newline$
+  preamble$ empty$ 'skip$
     { preamble$ write$ newline$ }
   if$
   "\begin{thebibliography}{"  longest.label  * "}" *
   write$ newline$
   "\providecommand{\url}[1]{#1}"
   write$ newline$
-  "\csname url@rmstyle\endcsname"
+  "\csname url@samestyle\endcsname"
   write$ newline$
   "\providecommand{\newblock}{\relax}"
   write$ newline$
   "\providecommand{\bibinfo}[2]{#2}"
   write$ newline$
-  "\providecommand\BIBentrySTDinterwordspacing{\spaceskip=0pt\relax}"
+  "\providecommand{\BIBentrySTDinterwordspacing}{\spaceskip=0pt\relax}"
   write$ newline$
-  "\providecommand\BIBentryALTinterwordstretchfactor{"
+  "\providecommand{\BIBentryALTinterwordstretchfactor}{"
   ALTinterwordstretchfactor * "}" *
   write$ newline$
-  "\providecommand\BIBentryALTinterwordspacing{\spaceskip=\fontdimen2\font plus "
+  "\providecommand{\BIBentryALTinterwordspacing}{\spaceskip=\fontdimen2\font plus "
   write$ newline$
   "\BIBentryALTinterwordstretchfactor\fontdimen3\font minus \fontdimen4\font\relax}"
   write$ newline$
-  "\providecommand\BIBforeignlanguage[2]{{%"
+  "\providecommand{\BIBforeignlanguage}[2]{{%"
   write$ newline$
   "\expandafter\ifx\csname l@#1\endcsname\relax"
   write$ newline$
@@ -1067,6 +1106,10 @@ FUNCTION {begin.bib}
   "\fi"
   write$ newline$
   "#2}}"
+  write$ newline$
+  "\providecommand{\BIBdecl}{\relax}"
+  write$ newline$
+  "\BIBdecl"
   write$ newline$
 }
 
@@ -1101,13 +1144,17 @@ FUNCTION {initialize.longest.label}
 }
 
 FUNCTION {longest.label.pass}
-{ number.label int.to.str$ 'label :=
-  number.label #1 + 'number.label :=
-  label width$ longest.label.width >
-    { label 'longest.label :=
-      label width$ 'longest.label.width :=
+{ type$ "ieeetranbstctl" =
+    { skip$ }
+    { number.label int.to.str$ 'label :=
+      number.label #1 + 'number.label :=
+      label width$ longest.label.width >
+        { label 'longest.label :=
+          label width$ 'longest.label.width :=
+        }
+        { skip$ }
+      if$
     }
-    'skip$
   if$
 }
 
@@ -1198,20 +1245,16 @@ FUNCTION {format.names}
           if$
           namesleft #1 >
             { ", " * t do.name.latex.cmd * }
-            {
-              numnames #2 >
-                { "," * }
-                'skip$
-              if$
-              s nameptr "{ll}" format.name$ duplicate$ "others" =
+            { s nameptr "{ll}" format.name$ duplicate$ "others" =
                 { 't := }
                 { pop$ }
               if$
               t "others" =
-                {
-                  " " * bbl.etal emphasize *
-                }
-                {
+                { " " * bbl.etal emphasize * }
+                { numnames #2 >
+                    { "," * }
+                    { skip$ }
+                  if$
                   bbl.and
                   space.word * t do.name.latex.cmd *
                 }
@@ -1672,11 +1715,11 @@ FUNCTION {format.pages}
 
 FUNCTION {format.tech.report.number}
 { number "number" bibinfo.check
+  this.to.prev.status
+  this.status.std
+  cap.status.std
   type duplicate$ empty$
     { pop$ 
-      this.to.prev.status
-      this.status.std
-      cap.status.std
       bbl.techrep
     }
     { skip$ }
@@ -1684,10 +1727,7 @@ FUNCTION {format.tech.report.number}
   "type" bibinfo.check 
   swap$ duplicate$ empty$
     { pop$ }
-    { this.to.prev.status
-      this.status.std
-      cap.status.std
-      tie.or.space.prefix * * }
+    { tie.or.space.prefix * * }
   if$
 }
 
@@ -1891,7 +1931,7 @@ FUNCTION {format.url}
     { this.to.prev.status
       this.status.std
       cap.yes 'status.cap :=
-      bbl.urlprefix " " * 
+      name.url.prefix " " *
       "\url{" * url * "}" *
       punct.no 'this.status.punct :=
       punct.period 'prev.status.punct :=
@@ -2297,7 +2337,7 @@ FUNCTION {IEEEtranBSTCTL}
     { skip$ }
     { CTLalt_stretch_factor
       'ALTinterwordstretchfactor :=
-      "\renewcommand\BIBentryALTinterwordstretchfactor{"
+      "\renewcommand{\BIBentryALTinterwordstretchfactor}{"
       ALTinterwordstretchfactor * "}" *
       write$ newline$
     }
@@ -2324,8 +2364,15 @@ FUNCTION {IEEEtranBSTCTL}
       'name.latex.cmd :=
     }
   if$
-  
-  
+  CTLname_url_prefix
+  missing$
+    { skip$ }
+    { CTLname_url_prefix
+      'name.url.prefix :=
+    }
+  if$
+
+
   num.names.shown.with.forced.et.al max.num.names.before.forced.et.al >
     { "CTLnames_show_etal cannot be greater than CTLmax_names_forced_etal in " cite$ * warning$ 
       max.num.names.before.forced.et.al 'num.names.shown.with.forced.et.al :=
@@ -2342,6 +2389,7 @@ FUNCTION {conference}{inproceedings}
 FUNCTION {online}{electronic}
 FUNCTION {internet}{electronic}
 FUNCTION {webpage}{electronic}
+FUNCTION {www}{electronic}
 FUNCTION {default.type}{misc}
 
 

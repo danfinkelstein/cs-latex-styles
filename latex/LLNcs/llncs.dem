@@ -1,7 +1,7 @@
 % This is LLNCS.DEM the demonstration file of
 % the LaTeX macro package from Springer-Verlag
 % for Lecture Notes in Computer Science,
-% version 2.2 for LaTeX2e
+% version 2.4 for LaTeX2e as of 16. April 2010
 %
 \documentclass{llncs}
 %
@@ -178,14 +178,11 @@ h\"ohreren Lehranstalten}
 Jeffrey Dean \and David Grove \and Craig Chambers \and Kim~B.~Bruce \and
 Elsa Bertino}
 %
-\authorrunning{Ivar Ekeland et al.}   % abbreviated author list (for running head)
+\authorrunning{Ivar Ekeland et al.} % abbreviated author list (for running head)
 %
-%%%% modified list of authors for the TOC (add the affiliations)
-\tocauthor{Ivar Ekeland (Princeton University),
-Roger Temam (Universit\'{e} de Paris-Sud),
-Jeffrey Dean, David Grove, Craig Chambers (Universit\`a di Geova),
-Kim B. Bruce (Stanford University),
-Elisa Bertino (Digita Research Center)}
+%%%% list of authors for the TOC (use if author list has to be modified)
+\tocauthor{Ivar Ekeland, Roger Temam, Jeffrey Dean, David Grove,
+Craig Chambers, Kim B. Bruce, and Elisa Bertino}
 %
 \institute{Princeton University, Princeton NJ 08544, USA,\\
 \email{I.Ekeland@princeton.edu},\\ WWW home page:
@@ -202,6 +199,7 @@ The abstract should summarize the contents of the paper
 using at least 70 and at most 150 words. It will be set in 9-point
 font size and be inset 1.0 cm from the right and left margins.
 There will be two blank lines before and after the Abstract. \dots
+\keywords{computational geometry, graph theory, Hamilton cycles}
 \end{abstract}
 %
 \section{Fixed-Period Problems: The Sublinear Case}
@@ -585,19 +583,19 @@ Sect.~5.2 of this article.
 Clarke, F., Ekeland, I.:
 Nonlinear oscillations and
 boundary-value problems for Hamiltonian systems.
-Arch. Rat. Mech. Anal. {\bf 78} (1982) 315--333
+Arch. Rat. Mech. Anal. 78, 315--333 (1982)
 
 \bibitem {clar:eke:2}
 Clarke, F., Ekeland, I.:
 Solutions p\'{e}riodiques, du
 p\'{e}riode donn\'{e}e, des \'{e}quations hamiltoniennes.
-Note CRAS Paris {\bf 287} (1978) 1013--1015
+Note CRAS Paris 287, 1013--1015 (1978)
 
 \bibitem {mich:tar}
 Michalek, R., Tarantello, G.:
 Subharmonic solutions with prescribed minimal
 period for nonautonomous Hamiltonian systems.
-J. Diff. Eq. {\bf 72} (1988) 28--55
+J. Diff. Eq. 72, 28--55 (1988)
 
 \bibitem {tar}
 Tarantello, G.:
@@ -608,7 +606,7 @@ Annali di Matematica Pura (to appear)
 \bibitem {rab}
 Rabinowitz, P.:
 On subharmonic solutions of a Hamiltonian system.
-Comm. Pure Appl. Math. {\bf 33} (1980) 609--633
+Comm. Pure Appl. Math. 33, 609--633 (1980)
 
 \end{thebibliography}
 
@@ -671,6 +669,8 @@ The abstract should summarize the contents of the paper
 using at least 70 and at most 150 words. It will be set in 9-point
 font size and be inset 1.0 cm from the right and left margins.
 There will be two blank lines before and after the Abstract. \dots
+\keywords{graph transformations, convex geometry, lattice computations,
+convex polygons, triangulations, discrete geometry}
 \end{abstract}
 %
 \section{Fixed-Period Problems: The Sublinear Case}
@@ -1055,19 +1055,19 @@ article.
 Clarke, F., Ekeland, I.:
 Nonlinear oscillations and
 boundary-value problems for Hamiltonian systems.
-Arch. Rat. Mech. Anal. {\bf 78} (1982) 315--333
+Arch. Rat. Mech. Anal. 78, 315--333 (1982)
 
 \bibitem[1981]{2clar:eke:2}
 Clarke, F., Ekeland, I.:
 Solutions p\'{e}riodiques, du
 p\'{e}riode donn\'{e}e, des \'{e}quations hamiltoniennes.
-Note CRAS Paris {\bf 287} (1978) 1013--1015
+Note CRAS Paris 287, 1013--1015 (1978)
 
 \bibitem[1982]{2mich:tar}
 Michalek, R., Tarantello, G.:
 Subharmonic solutions with prescribed minimal
 period for nonautonomous Hamiltonian systems.
-J. Diff. Eq. {\bf 72} (1988) 28--55
+J. Diff. Eq. 72, 28--55 (1988)
 
 \bibitem[1983]{2tar}
 Tarantello, G.:
@@ -1078,7 +1078,7 @@ Annali di Matematica Pura (to appear)
 \bibitem[1985]{2rab}
 Rabinowitz, P.:
 On subharmonic solutions of a Hamiltonian system.
-Comm. Pure Appl. Math. {\bf 33} (1980) 609--633
+Comm. Pure Appl. Math. 33, 609--633 (1980)
 
 \end{thebibliography}
 \clearpage
